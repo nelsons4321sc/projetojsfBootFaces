@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Cadastro de Uusário</title>
+	<style>
+        .mensagem {
+            font-size: 24px; /* Tamanho da fonte */
+            font-family: Arial, sans-serif; /* Tipo de fonte */
+            font-weight: bold; /* Peso da fonte (por exemplo, negrito) */
+            color: white; /* Cor do texto */
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+	<h:form style="text-align: center;">
+	<h:commandLink  value="Administração" action="primeiraPagina" style="margin-left:1cm;" />
+	<h:commandLink  value="Lançamento" action="lancamento" style="margin-left:1cm;"/>
+	<h:commandLink  value="Trocar Usuário" action="index" style="margin-left:1cm;"/>
+	</h:form>
+
+	<h:form id="formPessoa" style="text-align: center;">
+	
+		<h1 style="color: red">FORMULÁRIO EM JSF COM BOOTFACES</h1>
+		
+		
+		
+		<h:panelGrid columns="3" rendered="true" style="margin: 0 auto;">
+		
+		<f:facet name="header">
+				<h:outputText value="CADASTRO DE USUÁRIOS" />
+			</f:facet>
+		
+		<h:outputLabel value="Id"/>
+		<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true"/>
+		<br/>
+		<h:outputLabel value="Nome"/>
+		<h:inputText value="#{pessoaBean.pessoa.nome}"/>
+		<br/>
+		
+		<h:outputLabel value="SobreNome"/>
+		<h:inputText value="#{pessoaBean.pessoa.sobrenome}"/>
+		<br/>
+		
+		<h:outputLabel value="Idade"/>
+		<h:inputText value="#{pessoaBean.pessoa.idade}"/>
+		<br/>
+		
+		<h:outputLabel value="Data"/>
+		<h:inputText value="#{pessoaBean.pessoa.dataNascimento}" converterMessage="Data inválida">
+			<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-03:00"/>
+		</h:inputText>
+				
+		<h:outputLabel value="Login"/>
+		<h:inputText value="#{pessoaBean.pessoa.login}"/>
+		<br/>
+		
+		<h:outputLabel value="Senha"/>
+		<h:inputSecret value="#{pessoaBean.pessoa.senha}"/>
+		<br/>
+		
+		<h:outputLabel value="Perfil: " />
+					<h:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfilUser}" >
+						<f:selectItem itemLabel="[-Selecione-]" noSelectionOption="true"/>
+						<f:selectItem itemValue="ADMINISTRADOR" itemLabel="Administrador"/>
+						<f:selectItem itemValue="USUARIO" itemLabel="Usuário"/>
+						
+				</h:selectOneMenu>
+			<h:outputLabel />
+			
+		<h:outputLabel value="SituacaoUsuario: "  />
+		
+		<h:selectManyCheckbox id="campoSituaacaoUsuario" style="height:90px" value="#{pessoaBean.pessoa.situacaoUsusario}">
+			<f:selectItem itemValue="1" itemLabel="Casado"/>
+			<f:selectItem itemValue="2" itemLabel="Trabalha numa Multinacional"/>
+			<f:selectItem itemValue="3" itemLabel="Casa Própra"/>
+			<f:selectItem itemValue="4" itemLabel="carro"/>
+			<f:selectItem itemValue="5" itemLabel="Aposentado"/>
+			<f:selectItem itemValue="6" itemLabel="Tem Filhos"/>
+		</h:selectManyCheckbox>	
+		<h:outputLabel/>	
+		
+		
+		</h:panelGrid>
+		
+		
+		
+		<h:panelGroup>		
+			<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/salvar.jpg"/>	
+			<h:commandButton value="Novo" action="#{pessoaBean.novo}" image="/resources/img/novo.jpg"/>	
+			<h:commandButton value="Remover" action="#{pessoaBean.remove}" image="/resources/img/delete.jpg" rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}"/>
+		</h:panelGroup>
+		<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa" border="3"
+			cellpadding="4" style="margin: 0 auto;">
+			
+			<f:facet name="header">	Lista de pessoas cadastradas</f:facet>
+			
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+				<h:outputText value="#{pessoa.id}" />
+			</h:column>
+			<br/>
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				<h:outputText value="#{pessoa.nome}" />
+			</h:column>
+			<br />
+			<h:column>
+				<f:facet name="header">SobreNome</f:facet>
+				<h:outputText value="#{pessoa.sobrenome}" />
+			</h:column>
+			<br />
+					<h:column >
+				<f:facet name="header">Editar</f:facet>
+				<h:commandLink >
+					<f:setPropertyActionListener target="#{pessoaBean.pessoa}"
+						value="#{pessoa}" />
+						<h:graphicImage value="/resources/img/editar2.jpg"/>
+				</h:commandLink>
+			</h:column>
+			<br/>
+			<h:column rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}">
+				<f:facet name="header">Excluir</f:facet>
+				<h:commandLink action="#{pessoaBean.remove}">
+					<f:setPropertyActionListener  target="#{pessoaBean.pessoa}"
+						value="#{pessoa}"/>
+						<h:graphicImage value="/resources/img/excluir2.jpg"/>
+				</h:commandLink>
+			</h:column>
+		
+		
+		</h:dataTable>
+		
+				
+	</h:form>
+
+</h:body>
+
+</html>

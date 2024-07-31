@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+	  <h:head>
+	<title>Pagina JSF</title>
+	
+	<style>
+        .mensagem {
+            font-size: 20px; /* Tamanho da fonte */
+            font-family: Arial, sans-serif; /* Tipo de fonte */
+            font-weight: bold; /* Peso da fonte (por exemplo, negrito) */
+            color: black; /* Cor do texto */
+        }
+    </style>
+</h:head> 
+<h:body>
+	
+	<ui:include src="/menu.xhtml"/>
+
+	<h2 style="color: red" >FORMULÁRIO EM JSF COM BOOTFACES</h2>
+
+	<h:form id="formPessoa" style="text-align: center;" >
+	
+			
+		<b:messages infoStyle="background:orange" styleClass="mensagem"/>
+
+		<h:graphicImage height="100" width="100" library="img" name="logobiblia.jpg"/>
+
+		<h:panelGrid columns="3" rendered="true" style="margin: 0 auto;">
+		
+		<h:outputLabel value="Id"/>
+		<b:inputText value="#{pessoaBean.pessoa.id}" readonly="true"/>
+		<br/>
+		<h:outputLabel value="Nome"/>
+		<b:inputText value="#{pessoaBean.pessoa.nome}" required="true" 
+		requiredMessage="Informe o nome do usuário" pt:placeholder="Informe o nome do usuário"
+			validatorMessage="Nome deve ter no mínimo 4 letras">
+				<f:validateLength minimum="4" maximum="15"/>
+		</b:inputText>
+		
+		<br/>
+		
+		<h:outputLabel value="SobreNome"/>
+		<b:inputText value="#{pessoaBean.pessoa.sobrenome}" required="true" 
+		requiredMessage="Informe o sobrenome do usuário"
+		validatorMessage="SobreNome deve ter no mínimo 4 letras">
+			<f:validateLength minimum="4" maximum="15"/>
+		</b:inputText>
+		<br/>
+		
+		<h:outputLabel value="Idade"/>
+		<b:inputText value="#{pessoaBean.pessoa.idade}" required="true" requiredMessage="Informe a idade do usuário"/>
+		<br/>
+			
+		<h:outputLabel value="Login"/>
+		<b:inputText value="#{pessoaBean.pessoa.login}"/>
+		<br/>
+		
+		<h:outputLabel value="Senha"/>
+		<b:inputSecret pt:placeholder="Informe a senha" value="#{pessoaBean.pessoa.senha}" />
+		<br/>
+					
+		<h:outputLabel value="Data"/>
+		<b:inputText value="#{pessoaBean.pessoa.dataNascimento}" converterMessage="Data Inválida">
+		<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-03:00"/>
+		</b:inputText>
+		<br/>
+		
+		<h:outputLabel value="Perfil: " />
+					<h:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfilUser}" >
+						<f:selectItem itemLabel="[-Selecione-]" noSelectionOption="true"/>
+						<f:selectItem itemValue="ADMINISTRADOR" itemLabel="Administrador"/>
+						<f:selectItem itemValue="USUARIO" itemLabel="Usuário"/>
+						
+				</h:selectOneMenu>
+			<h:outputLabel />
+			
+		<h:outputLabel value="Situação do Usuario: "  />
+		
+		<h:selectManyCheckbox id="campoSituaacaoUsuario" style="height:90px" value="#{pessoaBean.pessoa.situacaoUsusario}">
+			<f:selectItem itemValue="1" itemLabel="Casado"/>
+			<f:selectItem itemValue="2" itemLabel="Trabalha numa Multinacional"/>
+			<f:selectItem itemValue="3" itemLabel="Casa Própra"/>
+			<f:selectItem itemValue="4" itemLabel="carro"/>
+			<f:selectItem itemValue="5" itemLabel="Aposentado"/>
+			<f:selectItem itemValue="6" itemLabel="Tem Filhos"/>
+		</h:selectManyCheckbox>	
+		<h:outputLabel/>	
+		
+		
+		</h:panelGrid>			
+			<h:panelGroup>
+				<h:commandButton value="Novo" action="#{pessoaBean.novo}" image="/resources/img/novo.jpg" title="Novo" />
+				<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/salvar.jpg" title="salvar"  />
+				<h:commandButton value="Remover" action="#{pessoaBean.remove}" image="/resources/img/delete.jpg"  title="Excluir" rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}"/>
+				<h:commandButton value="limpar" action="#{pessoaBean.novo}" image="/resources/img/limpar.jpg" title="Limpar"/>
+			</h:panelGroup>
+
+		
+
+
+
+		<b:dataTable value="#{pessoaBean.pessoas}" var="pessoa" border="3"
+			cellpadding="4" style="margin: 0 auto;">
+			<f:facet name="header">	Lista de pessoas cadastradas</f:facet>
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+				<h:outputText value="#{pessoa.id}" />
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				<h:outputText value="#{pessoa.nome}" />
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">SobreNome</f:facet>
+				<h:outputText value="#{pessoa.sobrenome}" />
+			</h:column>
+			
+			<h:column rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}">
+				<f:facet name="header">Editar</f:facet>
+				<h:commandLink >
+					<f:setPropertyActionListener target="#{pessoaBean.pessoa}"
+						value="#{pessoa}" />
+						<h:graphicImage value="/resources/img/editar2.jpg"/>
+				</h:commandLink>
+			</h:column>
+						
+			<h:column>
+				<f:facet name="header">Excluir</f:facet>
+				<h:commandLink action="#{pessoaBean.remove}">
+					<f:setPropertyActionListener  target="#{pessoaBean.pessoa}"
+						value="#{pessoa}"/>
+						<h:graphicImage value="/resources/img/excluir2.jpg"/>
+				</h:commandLink>
+			</h:column>
+		</b:dataTable>
+
+
+
+	</h:form>
+
+</h:body>
+
+</html>

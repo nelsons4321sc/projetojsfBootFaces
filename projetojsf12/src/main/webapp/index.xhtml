@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:b="http://bootsfaces.net/ui"	
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title> LOGIN</title>
+</h:head>
+
+<h:body>
+
+<b:messages  autoUpdate="true" id="msg"/>
+
+<b:form id="formLogin" style="margin-top:22%; margin-left:40%;">
+
+ <h1>Login em  JSF</h1>
+	
+	<b:panelGrid columns="2">
+		
+		<h:outputLabel value="Login"/>
+		<h:outputLabel></h:outputLabel>
+		
+		<b:inputText value="#{pessoaBean.pessoa.login}" required="true" requiredMessage="informe o nome do usuário" autocomplete="off" />
+		
+		<h:outputLabel></h:outputLabel>
+		<h:outputLabel value="Senha"/>
+		
+		<h:outputLabel></h:outputLabel>
+		<b:inputSecret value="#{pessoaBean.pessoa.senha}" required="true" requiredMessage="informe a senha"/>
+		
+		<h:outputLabel></h:outputLabel>
+		<b:commandButton value="Acessar"  action="#{pessoaBean.logar}" style="margin-left:50%;"/>
+	
+	</b:panelGrid>
+
+</b:form>
+</h:body>
+</html>

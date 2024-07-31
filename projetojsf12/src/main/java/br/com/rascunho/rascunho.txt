@@ -1,0 +1,109 @@
+		<h:form id="formPessoa" style="text-align: center;">
+		
+		<h1 style="color: red">FORMULÁRIO EM JSF COM BOOTFACES</h1>
+		
+		<h:panelGrid columns="3" rendered="true" style="margin: 0 auto;">
+		
+		<f:facet name="header">
+				<h:outputText value="CADASTRO DE USUÁRIOS" />
+			</f:facet>
+		
+		
+		
+		<h:column>
+				<f:facet name="header">Editar</f:facet>
+				<h:commandLink >
+					<f:setPropertyActionListener target="#{pessoaBean.pessoa}"
+						value="#{pessoa}" />
+						<h:graphicImage value="/resources/img/editar2.jpg"/>
+				</h:commandLink>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Excluir</f:facet>
+				<h:commandLink action="#{pessoaBean.remove}">
+					<f:setPropertyActionListener  target="#{pessoaBean.pessoa}"
+						value="#{pessoa}"/>
+						<h:graphicImage value="/resources/img/excluir2.jpg"/>
+				</h:commandLink>
+			</h:column>
+			
+			
+			
+			
+			
+			
+			
+			<h:panelGrid columns="3" rendered="true" style="margin: 0 auto;">
+		
+		<f:facet name="header">
+				<h:outputText value="CADASTRO DE USUÁRIOS" />
+			</f:facet>
+	
+		<h:outputLabel value="Id"/>
+		<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true"/>
+		<br/>
+		<h:outputLabel value="Nome"/>
+		<h:inputText value="#{pessoaBean.pessoa.nome}"/>
+		<br/>
+		
+		<h:outputLabel value="SobreNome"/>
+		<h:inputText value="#{pessoaBean.pessoa.sobrenome}"/>
+		<br/>
+		
+		<h:outputLabel value="Idade"/>
+		<h:inputText value="#{pessoaBean.pessoa.idade}"/>
+		<br/>
+		</h:panelGrid>
+				
+		<h:commandButton value="Salvar" action="#{pessoaBean.salvar}"/>	
+		<h:commandButton value="Novo" action="#{pessoaBean.novo}"/>	
+		<h:commandButton value="Remover" action="#{pessoaBean.remove}"/>
+		
+		<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa" border="3"
+			cellpadding="4" style="margin: 0 auto;">
+			
+			<f:facet name="header">	Lista de pessoas cadastradas</f:facet>
+			
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+				<h:outputText value="#{pessoa.id}" />
+			</h:column>
+			<br/>
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				<h:outputText value="#{pessoa.nome}" />
+			</h:column>
+			<br />
+			<h:column>
+				<f:facet name="header">SobreNome</f:facet>
+				<h:outputText value="#{pessoa.sobrenome}" />
+			</h:column>
+			<br />
+			
+		
+		
+		</h:dataTable>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		Criada pasta resources dentro da pasta webapp e dentro da pasta resources criada a pasta img
+		lá é colocada as imagens para os botões

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://java.sun.com/jsf/html">
+ 
+ <h:head>
+	<title>ProjetoJSF</title>
+</h:head>
+<h:body>
+	
+	
+	
+	<h:form id="formLogin" style="margin-top:22%; margin-left:40%;">
+	<h1>LOGIN EM  JSF</h1>
+
+	<h:panelGrid columns="2">
+		<h:outputLabel value="Login"/>
+		<h:outputLabel></h:outputLabel>
+		<h:inputText value="#{pessoaBean.pessoa.login}" required="true" requiredMessage="informe o nome do usuário" autocomplete="off" />
+		<h:outputLabel></h:outputLabel>
+		<h:outputLabel value="Senha"/>
+		<h:outputLabel></h:outputLabel>
+		<h:inputSecret value="#{pessoaBean.pessoa.senha}"/>
+		<h:outputLabel></h:outputLabel>
+		<h:commandButton value="Acessar"  action="#{pessoaBean.logar}"/>
+	</h:panelGrid>
+	
+		
+	</h:form>
+	
+	
+
+</h:body>
+ 
+
+
+
+
+</html>

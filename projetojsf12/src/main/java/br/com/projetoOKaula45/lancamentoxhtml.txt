@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" >
+
+<h:head>
+	<title>Lançamento</title>
+	
+	<style>
+        .mensagem {
+            font-size: 24px; /* Tamanho da fonte */
+            font-family: Arial, sans-serif; /* Tipo de fonte */
+            font-weight: bold; /* Peso da fonte (por exemplo, negrito) */
+            color: black; /* Cor do texto */
+        }
+          body {
+            width: 100%;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 100%;
+            }
+        }
+    </style>
+    
+   
+</h:head> 
+
+<h:body>
+
+<ui:include src="/menu.xhtml"/>
+<div class="container">
+
+<h:form id="formLancamento" style="margin-top:3%; margin-left:40%;">
+	
+		<h:panelGrid columns="2">
+		<f:facet name="header">
+					<h:outputText value="TELA DE LANÇAMENTOS" style="margin-left:-45%; font-size: 40px; color: red;"/>
+			</f:facet>
+			
+			<h:outputLabel value="ID"/>
+			<h:inputText value="#{lancamentoBean.lancamento.id}" readonly="true"/>
+			
+			<h:outputLabel value="Nota Fiscal"/>
+			<h:inputText value="#{lancamentoBean.lancamento.numeroNotaFiscal}"/>
+			
+			<h:outputLabel value="Origem"/>
+			<h:inputText value="#{lancamentoBean.lancamento.empresaOrigem}"/>
+			
+			<h:outputLabel value="Destino"/>
+			<h:inputText value="#{lancamentoBean.lancamento.empresaDestino}"/>
+			
+			<h:outputLabel/>
+			<h:panelGroup style="margin-left:-30%;">
+				<h:commandButton value="Novo" action="#{lancamentoBean.novo}" image="/resources/img/novo.jpg" title="Novo" />
+				<h:commandButton value="Salvar" action="#{lancamentoBean.salvar}" image="/resources/img/salvar.jpg" title="salvar" />
+				<h:commandButton value="remover" action="#{lancamentoBean.remover}" image="/resources/img/delete.jpg"  title="Excluir" rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}"/>
+				<h:commandButton value="limpar" type="reset" image="/resources/img/limpar.jpg" title="Limpar"/>
+				
+			</h:panelGroup>
+			
+			<h:outputLabel value="Status da Nota Fiscal"/>
+			<h:selectOneRadio value="#{lancamentoBean.lancamento.statusNotaFiscal}" layout="pageDirection">
+				<f:selectItem itemValue="A" itemLabel="Aprovada"/>
+				<f:selectItem itemValue="P" itemLabel="Preparando"/>
+				<f:selectItem itemValue="R" itemLabel="Rejeitada"/>
+			</h:selectOneRadio>
+			
+		</h:panelGrid>
+		
+		<h:dataTable value="#{lancamentoBean.lancamentos}" style="margin-left:-7%;"  var="lanc" border="5"  >
+			
+			<f:facet name="header"> Lista de Lançamentos</f:facet>
+			
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+				<h:outputLabel value="#{lanc.id}"/>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Nota</f:facet>
+				<h:outputLabel value="#{lanc.numeroNotaFiscal}"/>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Origem</f:facet>
+				<h:outputLabel value="#{lanc.empresaOrigem}"/>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Destino</f:facet>
+				<h:outputLabel value="#{lanc.empresaDestino}"/>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Editar</f:facet>
+				<h:commandLink title="Editar">
+					<h:graphicImage value="/resources/img/editar2.jpg"/>
+					<f:setPropertyActionListener target="#{lancamentoBean.lancamento}"
+					 value="#{lanc}" />
+				</h:commandLink>
+			</h:column>
+			
+			<h:column rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}">
+				<f:facet name="header">Excluir</f:facet>
+				<h:commandLink  action="#{lancamentoBean.remover}" title="excluir">
+					<h:graphicImage value="/resources/img/excluir2.jpg"/>
+					<f:setPropertyActionListener target="#{lancamentoBean.lancamento}"
+					 value="#{lanc}" />
+				</h:commandLink>
+			</h:column>
+			
+			
+		</h:dataTable>
+
+</h:form>
+
+</div>	
+
+</h:body>
+
+</html>

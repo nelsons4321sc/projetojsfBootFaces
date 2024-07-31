@@ -15,6 +15,7 @@ import br.com.jpautil.JPAUtil;
 @FacesConverter(forClass = Estados.class)
 public class EstadoConverter implements Converter, Serializable {
 
+Adicionando linhas 31/07/2024
 	/**
 	 * 
 	 */
